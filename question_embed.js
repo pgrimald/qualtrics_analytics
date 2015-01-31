@@ -1,13 +1,15 @@
 Qualtrics.SurveyEngine.addOnload(function()
 {	
-	//get bar values from dummy question, puts into array
+	//get bar values from analyticsData Div, put into array
 	var barValueArray = [];
-	$j("#QID18 label ul li").each(function() {
+	$j("#analyticsData ul li").each(function() {
 		barValueArray.push($j(this).text()); 
 	});
 	
-	//hide the dummy question
-	$j("#QID18").hide();
+	
+	//hide the analyticsData
+	$j("#analyticsData").hide();
+	
 	
 	//construct the bars	
 	var outerdiv = "<div style='height:22px;border-radius:2px;width:100%;border:1px solid #4887F1'>";
@@ -21,12 +23,12 @@ Qualtrics.SurveyEngine.addOnload(function()
 	var analyticsReport = "";
 	var topicLabels = ["Topic A", "Topic B", "Topic C", "Topic D"];
 	
-	
 	$j.each(bars, function( i,bar ) {
 		analyticsReport = analyticsReport + topicLabels[i] + bar + "<br>";
 	});
 	
-	//wrap the report
+	
+	//wrap the report (can format width here)
 	analyticsReport = "<div id='analyticswrapper' style= width:80%>" + analyticsReport + "</div><br>";
 	
 	//display report on page
