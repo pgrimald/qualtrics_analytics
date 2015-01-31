@@ -1,25 +1,40 @@
 Qualtrics.SurveyEngine.addOnload(function()
-{
-	/*Place Your Javascript Below This Line*/
-		var outerdiv = "<div style='height:22px;border-radius:2px;width:100%;border:1px solid #4887F1'>";
-		var bar1 = outerdiv + "<div style='background-color:#4887F1;height:20px;border-radius:2px;width:10%'></div></div>";
-		var bar2 = outerdiv + "<div style='background-color:#4887F1;height:20px;border-radius:2px;width:20%'></div></div>";
-		var bar3 = outerdiv + "<div style='background-color:#4887F1;height:20px;border-radius:2px;width:30%'></div></div>";
-		var bar4 = outerdiv + "<div style='background-color:#4887F1;height:20px;border-radius:2px;width:40%'></div></div>";
-		
-		var bars = [bar1, bar2, bar3, bar4];
-		var topicLabels = ["Topic A", "Topic B", "Topic C", "Topic D"];
+{	
+	//get bar values from dummy question, puts into array
+	var barValueArray = [];
+	$j("#QID18 label ul li").each(function() {
+		barValueArray.push($j(this).text()); 
+	});
 	
-		var analyticsReport = "";
+	//hide the dummy question
+	$j("#QID18").hide();
 	
-		$j.each(bars, function( i,bar ) {
-			analyticsReport = analyticsReport + topicLabels[i] + bar + "<br>";
-  			//$j("#Questions").after(topics[i] + bar + "<br>"); //Vi--I constructed the div first before putting after, otherwise the order was reversed
-		});
-		
-		//wrap the analytics for formatting
-		analyticsReport = "<div id='analyticswrapper'>" + analyticsReport + "</div>";
+	//construct the bars	
+	var outerdiv = "<div style='height:22px;border-radius:2px;width:100%;border:1px solid #4887F1'>";
+	var bars = [];
+	for (i=0;i<4;i++){
+		bars.push(outerdiv + getInnerDiv(barValueArray[i]) + "</div></div>");
+	};
 	
-		$j("#Questions").after(analyticsReport);
+	
+	//construct the full report (includes labels)
+	var analyticsReport = "";
+	var topicLabels = ["Topic A", "Topic B", "Topic C", "Topic D"];
+	
+	
+	$j.each(bars, function( i,bar ) {
+		analyticsReport = analyticsReport + topicLabels[i] + bar + "<br>";
+	});
+	
+	//wrap the report
+	analyticsReport = "<div id='analyticswrapper' style= width:80%>" + analyticsReport + "</div><br>";
+	
+	//display report on page
+	$j("#Questions").after(analyticsReport);
 });
 
+
+function getInnerDiv(pValue){
+    var theDiv = "<div style='background-color:#4887F1;height:20px;border-radius:2px;width:"+pValue+"%'>";
+	return theDiv
+}
