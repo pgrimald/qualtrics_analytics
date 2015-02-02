@@ -28,11 +28,11 @@ Qualtrics.SurveyEngine.addOnload(function()
 	});
 	
 	
-	//wrap the report (can format width here)
+	//wrap the report (can add style here to report here, including width)
 	analyticsReport = "<div id='analyticswrapper' style= width:80%>" + analyticsReport + "</div><br>";
 	
 	//display report on page
-	$j("#Questions").after(analyticsReport);
+	$j("#analyticsContainer").replaceWith(analyticsReport);
 });
 
 
