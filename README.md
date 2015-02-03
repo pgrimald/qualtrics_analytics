@@ -1,4 +1,4 @@
-# qualtrics-analytics
+# qualtrics_analytics
 Creates personalized bar graphs for Qualtrics users based on embedded data. 
 
 
