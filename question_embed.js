@@ -18,18 +18,21 @@ Qualtrics.SurveyEngine.addOnload(function()
 		bars.push(outerdiv + getInnerDiv(barValueArray[i]) + "</div></div>");
 	};
 	
+	//construct full report (in table form)
+	var analyticsReport = $j('<table/>');
+	var topicLabels = ["Types of Signals", "Signals and Vectors", "Discrete Time Systems", "Convolution"];
 	
-	//construct the full report (includes labels)
-	var analyticsReport = "";
-	var topicLabels = ["Topic A", "Topic B", "Topic C", "Topic D"];
-	
-	$j.each(bars, function( i,bar ) {
-		analyticsReport = analyticsReport + topicLabels[i] + bar + "<br>";
+	analyticsReport.append( '<tr><th></th><th width=15% style="text-align:center"></th><th width=15% style="text-align:center"></th><th width=15% style="text-align:center"></th><th width=15% style="text-align:center"></th><th width=15% style="text-align:center"></th></tr>' );
+
+	$j.each(bars, function(i,bar) {
+		analyticsReport.append( '<tr><td>' + topicLabels[i] + '</td><td width=75% colspan=5>' + bar + '</td><td>&nbsp&nbsp' + barValueArray[i] + '%</td></tr><tr><td>&nbsp</td></tr>' );
 	});
 	
+	//styling the report
+	analyticsReport.css("width", "100%");
 	
 	//wrap the report (can add style here to report here, including width)
-	analyticsReport = "<div id='analyticswrapper' style= width:80%>" + analyticsReport + "</div><br>";
+	//analyticsReport = "<div id='analyticswrapper' style= width:100%>" + analyticsReport + "</div><br>";
 	
 	//display report on page
 	$j("#analyticsContainer").replaceWith(analyticsReport);
@@ -37,6 +40,6 @@ Qualtrics.SurveyEngine.addOnload(function()
 
 
 function getInnerDiv(pValue){
-    var theDiv = "<div style='background-color:#4887F1;height:20px;border-radius:2px;width:"+pValue+"%'>";
+    var theDiv = "<div style='background-color:#4887F1;height:100%;border:1px solid #4887F1;border-radius:1px;width:"+pValue+"%'>";
 	return theDiv
 }
